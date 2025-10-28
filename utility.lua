@@ -2,14 +2,15 @@ local M = {}
 
 ---@param string warning
 function M.printWarning(warning)
-	print("Chordio: Warning: " .. warning)
+	print("Chordio.spoon: Warning: " .. warning)
 end
 
----@param state State
 ---@return boolean
-function M.toggleMode(state)
+function M.toggleMode()
+	local state = Chordio.state
+
 	if not state then
-		Chordio.utility.printWarning("cannot toggle mode, undefined state")
+		Chordio.utility.printWarning("cannot toggle mode, state is not undefined")
 		return false
 	end
 

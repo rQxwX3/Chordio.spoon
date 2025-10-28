@@ -10,17 +10,38 @@ Chordio.homepage = "https://github.com/rQxwX3/Chordio.spoon"
 Chordio.path = package.searchpath("Chordio", package.path):match("(.*/)")
 package.path = package.path .. ';' .. Chordio.path .. '?.lua'
 
----@type State
-Chordio.state = {
-	isNormalMode = false
-}
-
 Chordio.actions = require("actions")
 Chordio.utility = require("utility")
-Chordio.chords = require("chords")
 Chordio.config = require("config")
+Chordio.modes = require("modes")
+
+---@type State
+Chordio.state = {
+	currentMode = ""
+}
+
+---@type Mode[]
+Chordio.modesTable = {}
 
 function Chordio:init()
+	Chordio:loadConfig()
+end
+
+function Chordio:loadConfig()
+	local config = self.config
+
+	if not config then
+		self.utility.printWarning("config not found")
+		self:exit()
+	end
+
+	for _, mode in ipairs(config.modes) do
+		self.modes.addNewMode(mode)
+	end
+end
+
+function Chordio:exit()
+	print("Chordio: exited")
 end
 
 return Chordio
