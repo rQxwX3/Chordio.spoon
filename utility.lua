@@ -1,12 +1,15 @@
---require("types")
-
 local M = {}
+
+---@param string warning
+function M.printWarning(warning)
+	print("Chordio: Warning: " .. warning)
+end
 
 ---@param state State
 ---@return boolean
 function M.toggleMode(state)
 	if not state then
-		print("warning: cannot toggle mode, undefined state")
+		Chordio.utility.printWarning("cannot toggle mode, undefined state")
 		return false
 	end
 

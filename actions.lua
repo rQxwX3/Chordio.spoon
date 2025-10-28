@@ -8,7 +8,7 @@ function M.launchApp(appName)
 	local result = hsApps.launchOrFocus(appName)
 
 	if not result then
-		print("warning: application \'" .. appName .. "\' not found")
+		Chordio.utility.printWarning("application \'" .. appName .. "\' not found")
 		return false
 	end
 

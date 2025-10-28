@@ -1,4 +1,4 @@
-local Chordio = {}
+Chordio = {}
 
 -- Spoon metadata
 Chordio.name = "Chordio"
@@ -21,7 +21,6 @@ Chordio.chords = require("chords")
 Chordio.config = require("config")
 
 function Chordio:init()
-	print("hello from the chordio world")
 end
 
 return Chordio
