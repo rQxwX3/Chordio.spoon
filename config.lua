@@ -4,8 +4,8 @@ local M = {}
 M.modes = {
 	{
 		name = "nameOfTheMode",
-		enterCombo = { mods = {}, keys = { "escape" } },
-		exitCombo = { mods = {}, keys = { "escape" } }
+		enterCombo = { mods = {}, keys = { "a" } },
+		exitCombo = { mods = {}, keys = { "a" } }
 	},
 }
 

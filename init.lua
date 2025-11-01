@@ -24,7 +24,7 @@ Chordio.state = {
 Chordio.modesTable = {}
 
 function Chordio:init()
-	Chordio:loadConfig()
+	self:loadConfig()
 end
 
 function Chordio:loadConfig()

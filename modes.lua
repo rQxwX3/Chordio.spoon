@@ -23,8 +23,6 @@ end
 ---@param mode Mode
 ---@return boolean
 function M.addNewMode(mode)
-	local newMode = hs.hotkey.modal.new()
-
 	local enterCombo = mode.enterCombo
 	local exitCombo = mode.exitCombo
 
@@ -33,10 +31,7 @@ function M.addNewMode(mode)
 		return false
 	end
 
-	-- if #enterCombo.mods and #enterCombo.keys == 1 then
-	-- 	newMode:bind(enterCombo.mods, enterCombo.keys[1])
-	-- end
-	--
+	local newMode = hs.hotkey.modal.new(enterCombo.mods, enterCombo.keys[1])
 	table.insert(Chordio.modesTable, newMode)
 
 	return true
