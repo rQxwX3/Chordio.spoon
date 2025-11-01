@@ -5,7 +5,7 @@ M.modes = {
 	{
 		name = "nameOfTheMode",
 		enterCombo = { mods = {}, keys = { "a" } },
-		exitCombo = { mods = {}, keys = { "a" } }
+		exitCombo = { mods = {}, keys = { "a" } },
 	},
 }
 

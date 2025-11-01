@@ -15,13 +15,11 @@ Chordio.utility = require("utility")
 Chordio.config = require("config")
 Chordio.modes = require("modes")
 
----@type State
-Chordio.state = {
-	currentMode = ""
-}
+---@type string
+Chordio.currentMode = ""
 
----@type Mode[]
-Chordio.modesTable = {}
+---@type table<string, HSMode>
+Chordio.modeHSModeMap = {}
 
 function Chordio:init()
 	self:loadConfig()
@@ -36,7 +34,7 @@ function Chordio:loadConfig()
 	end
 
 	for _, mode in ipairs(config.modes) do
-		self.modes.addNewMode(mode)
+		self.modes.createHSMode(mode)
 	end
 end
 

@@ -22,17 +22,32 @@ end
 
 ---@param mode Mode
 ---@return boolean
-function M.addNewMode(mode)
+function M.createHSMode(mode)
 	local enterCombo = mode.enterCombo
 	local exitCombo = mode.exitCombo
+	local modeName = mode.name
 
 	if not M.isValidCombo(enterCombo) or not M.isValidCombo(exitCombo) then
-		Chordio.utility.printWarning("invalid combo provided for mode " .. mode.name)
+		Chordio.utility.printWarning("invalid combo provided for mode " .. modeName)
 		return false
 	end
 
-	local newMode = hs.hotkey.modal.new(enterCombo.mods, enterCombo.keys[1])
-	table.insert(Chordio.modesTable, newMode)
+	local hsMode = hs.hotkey.modal.new(enterCombo.mods, enterCombo.keys[1])
+	Chordio.modeHSModeMap[modeName] = hsMode
+
+	return true
+end
+
+---@param modeName string
+---@return boolean
+function M.enterHSMode(modeName)
+	local hsMode = Chordio.modeHSModeMap[modeName]
+
+	if not hsMode then
+		return false
+	end
+
+	Chordio.currentMode = modeName
 
 	return true
 end
