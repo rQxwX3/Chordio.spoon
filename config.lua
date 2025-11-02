@@ -4,8 +4,14 @@ local M = {}
 M.modes = {
 	{
 		name = "nameOfTheMode",
-		enterCombo = { mods = {}, keys = { "a" } },
-		exitCombo = { mods = {}, keys = { "a" } },
+		enterChord = { mods = {}, keys = { "escape" } },
+		exitChord = { mods = {}, keys = { "escape" } },
+		actionChords = {
+			{
+				chord = { mods = {}, keys = { "a" } },
+				action = function() return true end
+			},
+		},
 	},
 }
 

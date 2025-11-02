@@ -1,39 +1,20 @@
 local M = {}
 
----@param combo Combo
----@return boolean
-function M.isValidCombo(combo)
-	if not combo.keys then return false end
-
-	for _, key in ipairs(combo.keys) do
-		if not hs.keycodes.map[key] then
-			return false
-		end
-	end
-
-	for _, key in ipairs(combo.mods) do
-		if not hs.keycodes.map[key] then
-			return false
-		end
-	end
-
-	return true
-end
-
 ---@param mode Mode
 ---@return boolean
-function M.createHSMode(mode)
-	local enterCombo = mode.enterCombo
-	local exitCombo = mode.exitCombo
+function M.setupHSMode(mode)
+	local enterChord = mode.enterChord
+	local exitChord = mode.exitChord
 	local modeName = mode.name
 
-	if not M.isValidCombo(enterCombo) or not M.isValidCombo(exitCombo) then
+	local util = require("utility")
+
+	if not util.isValidChord(enterChord) or not util.isValidChord(exitChord) then
 		Chordio.utility.printWarning("invalid combo provided for mode " .. modeName)
 		return false
 	end
 
-	local hsMode = hs.hotkey.modal.new(enterCombo.mods, enterCombo.keys[1])
-	Chordio.modeHSModeMap[modeName] = hsMode
+	Chordio.modeHSModeMap[modeName] = hs.hotkey.modal.new()
 
 	return true
 end
@@ -47,8 +28,22 @@ function M.enterHSMode(modeName)
 		return false
 	end
 
+	hsMode:enter()
 	Chordio.currentMode = modeName
 
+	return true
+end
+
+---@return boolean
+function M.exitHSMode()
+	local hsMode = Chordio.modeHSModeMap[Chordio.currentMode]
+
+	if not hsMode then
+		return false
+	end
+
+	hsMode:exit()
+	Chordio.currentMode = ""
 	return true
 end
 

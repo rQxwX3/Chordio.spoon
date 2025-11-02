@@ -34,7 +34,7 @@ function Chordio:loadConfig()
 	end
 
 	for _, mode in ipairs(config.modes) do
-		self.modes.createHSMode(mode)
+		self.modes.setupHSMode(mode)
 	end
 end
 

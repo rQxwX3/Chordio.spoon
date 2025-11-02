@@ -1,21 +1,28 @@
 local M = {}
 
----@param string warning
-function M.printWarning(warning)
-	print("Chordio.spoon: Warning: " .. warning)
-end
-
+---@param chord Chord
 ---@return boolean
-function M.toggleMode()
-	local state = Chordio.state
+function M.isValidChord(chord)
+	if not chord.keys then return false end
 
-	if not state then
-		Chordio.utility.printWarning("cannot toggle mode, state is not undefined")
-		return false
+	for _, key in ipairs(chord.keys) do
+		if not hs.keycodes.map[key] then
+			return false
+		end
 	end
 
-	state.isNormalMode = not state.isNormalMode
+	for _, mod in ipairs(chord.mods) do
+		if not hs.keycodes.map[mod] then
+			return false
+		end
+	end
+
 	return true
+end
+
+---@param warning string
+function M.printWarning(warning)
+	print("Chordio.spoon: Warning: " .. warning)
 end
 
 return M
