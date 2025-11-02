@@ -1,15 +1,28 @@
 local M = {}
 
+local actions = require("actions")
+
 ---@type Mode[]
 M.modes = {
 	{
-		name = "nameOfTheMode",
-		enterChord = { mods = {}, keys = { "escape" } },
-		exitChord = { mods = {}, keys = { "escape" } },
+		name = "appSwitching",
+		enterChord = { mods = {}, keys = { "[" } },
+		exitChord = { mods = {}, keys = { "]" } },
 		actionChords = {
 			{
 				chord = { mods = {}, keys = { "a" } },
-				action = function() return true end
+				action = { fun = actions.launchApp, params = { "Arc" } },
+				immediateAction = true
+			},
+			{
+				chord = { mods = {}, keys = { "w" } },
+				action = { fun = actions.launchApp, params = { "Wezterm" } },
+				immediateAction = true
+			},
+			{
+				chord = { mods = {}, keys = { "t" } },
+				action = { fun = actions.launchApp, params = { "Telegram" } },
+				immediateAction = true
 			},
 		},
 	},

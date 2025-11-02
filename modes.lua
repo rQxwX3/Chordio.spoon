@@ -3,46 +3,61 @@ local M = {}
 ---@param mode Mode
 ---@return boolean
 function M.setupHSMode(mode)
-	local enterChord = mode.enterChord
-	local exitChord = mode.exitChord
-	local modeName = mode.name
+	local modeName, enterChord, exitChord =
+		mode.name, mode.enterChord, mode.exitChord
 
-	local util = require("utility")
+	local hsMode = hs.hotkey.modal.new()
+	Chordio.nameHSModeMap[modeName] = hsMode
 
-	if not util.isValidChord(enterChord) or not util.isValidChord(exitChord) then
-		Chordio.utility.printWarning("invalid combo provided for mode " .. modeName)
-		return false
+	local chords = require("chords")
+
+	hs.hotkey.bind(enterChord.mods, enterChord.keys[1], function()
+		M.enterHSMode(hsMode, modeName)
+	end)
+
+	-- hs.hotkey.bind(exitChord.mods, exitChord.keys[1], function()
+	-- 	M.exitHSMode(hsMode)
+	-- end)
+
+	chords.setHSModeHotKey(hsMode, {
+		chord = exitChord,
+		action = { fun = M.exitHSMode, params = { hsMode } },
+		immediateAction = false
+	})
+
+	for _, actionChord in ipairs(mode.actionChords) do
+		chords.setHSModeHotKey(hsMode, actionChord)
 	end
-
-	Chordio.modeHSModeMap[modeName] = hs.hotkey.modal.new()
 
 	return true
 end
 
+---@param hsMode HSMode
 ---@param modeName string
 ---@return boolean
-function M.enterHSMode(modeName)
-	local hsMode = Chordio.modeHSModeMap[modeName]
+function M.enterHSMode(hsMode, modeName)
+	hs.alert(Chordio.currentMode)
 
 	if not hsMode then
 		return false
 	end
 
 	hsMode:enter()
-	Chordio.currentMode = modeName
 
+	Chordio.currentMode = modeName
 	return true
 end
 
 ---@return boolean
-function M.exitHSMode()
-	local hsMode = Chordio.modeHSModeMap[Chordio.currentMode]
+function M.exitHSMode(hsMode)
+	hs.alert(Chordio.currentMode)
 
 	if not hsMode then
 		return false
 	end
 
 	hsMode:exit()
+
 	Chordio.currentMode = ""
 	return true
 end

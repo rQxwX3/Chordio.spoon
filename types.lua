@@ -5,6 +5,7 @@
 ---@class ActionChord
 ---@field chord Chord
 ---@field action Action
+---@field immediateAction boolean
 
 ---@class Mode
 ---@field name string
@@ -15,13 +16,18 @@
 ---@class HSMode
 ---@field enter fun(self)
 ---@field exit fun(self)
----@field bind fun(self, mods:string[], key:string, pressed:fun(), released:fun())
----@field unbind fun(self, mods:string[], key:string)
----@field delete fun(self)
----@field entered fun(self):boolean
----@field exited fun(self):boolean
----@field setTitle fun(self, title:string)
+---@field bind fun(
+---self,
+---mods:string[],
+---key:string,
+---message:string|nil,
+---pressedfn:fun()|nil,
+---releasedfn:fun()|nil,
+---repeatfn:fun()|nil,
+---)
 
----@alias Action fun(...): boolean
+---@class Action
+---@field fun(...): boolean
+---@field params table
 
 return {}

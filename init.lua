@@ -19,7 +19,7 @@ Chordio.modes = require("modes")
 Chordio.currentMode = ""
 
 ---@type table<string, HSMode>
-Chordio.modeHSModeMap = {}
+Chordio.nameHSModeMap = {}
 
 function Chordio:init()
 	self:loadConfig()
